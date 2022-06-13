@@ -12,7 +12,6 @@ import com.javaex.vo.MainVo;
 
 public class MainDao {
 
-	
 	// 0. import java.sql.*;
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
@@ -60,9 +59,8 @@ public class MainDao {
 	public List<MainVo> getMainList() {
 		List<MainVo> mainList = new ArrayList<MainVo>();
 		getConnection();
-		
-		try {
 
+		try {
 
 			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
 			// SQL문 준비
@@ -88,9 +86,8 @@ public class MainDao {
 				String password = rs.getString("password");
 				String content = rs.getString("content");
 				String reg_date = rs.getString("reg_date");
-				
-				
-				//전체출력
+
+				// 전체출력
 				mainList.add(new MainVo(no, name, password, content, reg_date));
 			}
 
@@ -101,35 +98,65 @@ public class MainDao {
 		close();
 		return mainList;
 	}
-	
-	
-	
-	//Guestbook추가 => insert
-	public int guestInsert(MainVo mainVo) {	 // delete, update도 이거 사용 가능 (대신 변수선언 변경)
+
+	// Guestbook추가 => insert
+	public int guestInsert(MainVo mainVo) { // delete, update도 이거 사용 가능 (대신 변수선언 변경)
 		int count = -1;
 		getConnection();
 
 		try {
-			
-			
+
 			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
 			// SQL문 준비
 			String query = "";
 			query += " insert into guestbook ";
 			query += " values(seq_guestbook_no.nextval, ?, ?, ?, sysdate) ";
 
-			//바인딩 쿼리로 만들기
+			// 바인딩 쿼리로 만들기
 			pstmt = conn.prepareStatement(query);
 
 			pstmt.setString(1, mainVo.getName());
 			pstmt.setString(2, mainVo.getPassword());
 			pstmt.setString(3, mainVo.getContent());
 
-			//실행
+			// 실행
 			count = pstmt.executeUpdate();
 
 			// 4.결과처리
 			System.out.println("[" + count + " 건 추가되었습니다.]");
+
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		}
+
+		close();
+		return count;
+	}
+
+	// Guestbook삭제 => delete
+	public int delete(MainVo mainvo) {
+		int count = -1;
+
+		try {
+			getConnection();
+
+			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
+			// SQL문 준비
+			String query = "";
+			query += " delete guestbook ";
+			query += " where no = ? ";
+			query += " and password = ? ";
+
+			// 바인딩 쿼리로 만들기
+			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+			pstmt.setInt(1, mainvo.getNo());
+			pstmt.setString(2, mainvo.getPassword());
+
+			// 실행
+			count = pstmt.executeUpdate();
+
+			// 결과처리
+			System.out.println(count + "건이 삭제되었습니다.");
 
 		} catch (SQLException e) {
 			System.out.println("error: " + e);

@@ -17,7 +17,7 @@
 		<table border="1" width="500">
 			<tr>
 				<td>이름</td>
-				<td>//값이 없으면 안 써도 됨! <input type="text" name="name" value=""></td>
+				<td><input type="text" name="name" value=""></td>
 				<td>비밀번호</td>
 				<td><input type="password" name="password"></td>
 			</tr>
@@ -38,18 +38,18 @@
 
 	<!-- 글 출력 -->
 	<c:forEach items="${requestScope.mainList}" var="mainVo">
-		<table width=510 border=1>
+		<table width=590 border=1>
 			<tr>
-				<td width="50px">${mainVo.mainNo}</td>
-				<td width="150px">${mainVo.mainName}</td>
-				<td width="300px">${mainVo.mainDate}</td>
+				<td width="50px">${mainVo.no}</td>
+				<td width="150px">${mainVo.name}</td>
+				<td width="300px">${mainVo.date}</td>
 				<td>
 				<a href="deleteForm/${mainVo.no }">삭제</a>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="4" width="590px">
-					<p>${mainVo.mainContent()}</p>
+					<p>${mainVo.content}</p>
 				</td>
 			</tr>
 		</table>
