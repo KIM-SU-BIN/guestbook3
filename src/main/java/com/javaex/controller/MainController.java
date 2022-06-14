@@ -17,6 +17,7 @@ import com.javaex.vo.MainVo;
 public class MainController {
 
 	//필드
+	private MainDao mainDao = new MainDao();
 	
 	//생성자
 	
@@ -29,7 +30,7 @@ public class MainController {
 		System.out.println("GuestbookController->delete()");
 		
 		//데이터 가져오기
-		MainDao mainDao = new MainDao();
+		//MainDao mainDao = new MainDao();
 		mainDao.delete(no, password);
 		
 		
@@ -46,7 +47,7 @@ public class MainController {
 		System.out.println("GuestbookController->deleteForm()");
 		
 		//데이터 가져오기
-		MainDao mainDao = new MainDao();
+		//MainDao mainDao = new MainDao();
 		MainVo mainVo = mainDao.getMainList(no);
 		
 		model.addAttribute("mainVo", mainVo);
@@ -61,7 +62,7 @@ public class MainController {
 	public String write(@ModelAttribute MainVo mainVo){
 		System.out.println("GuestbookController->write()");
 		
-		MainDao mainDao = new MainDao();
+		//MainDao mainDao = new MainDao();
 		mainDao.guestInsert(mainVo);
 		
 		return "redirect:/addList";
@@ -78,7 +79,7 @@ public class MainController {
 		System.out.println("Guestbook3Controller>mainList()");
 		
 		//데이터 가져오기
-		MainDao mainDao = new MainDao();
+		//MainDao mainDao = new MainDao();
 		List<MainVo> mainList = mainDao.getMainList();
 				
 		model.addAttribute("mainList", mainList);
