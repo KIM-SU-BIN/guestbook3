@@ -25,28 +25,31 @@ public class MainController {
 	//메소드 일반
 	//Guestbook 삭제
 	@RequestMapping(value="/delete/{no}", method= {RequestMethod.GET, RequestMethod.POST})
-	public String delete(@ModelAttribute MainVo mainVo) {
+	public String delete(@PathVariable("no") int no, @RequestParam("password") String password) {
 		System.out.println("GuestbookController->delete()");
 		
 		//데이터 가져오기
 		MainDao mainDao = new MainDao();
-		mainDao.delete(mainVo);
+		mainDao.delete(no, password);
+		
+		
 		/*
+ 		@ModelAttribute 사용했기 떄문에 필요 없음!
 		MainDao.guestDelete(no, pw);
 		*/
 		return"redirect:/list";
 	}
-	
-	
-	
-	
 	
 	//Guestbook 삭제폼
 	@RequestMapping(value="/deleteForm/{no}", method= {RequestMethod.GET, RequestMethod.POST})
 	public String deleteForm(@PathVariable("no") int no, Model model) {
 		System.out.println("GuestbookController->deleteForm()");
 		
-		model.addAttribute("no", no);
+		//데이터 가져오기
+		MainDao mainDao = new MainDao();
+		MainVo mainVo = mainDao.getMainList(no);
+		
+		model.addAttribute("mainVo", mainVo);
 		
 		return "/WEB-INF/views/deleteForm.jsp";
 	}

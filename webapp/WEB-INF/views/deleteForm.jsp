@@ -12,7 +12,7 @@
 
 	<form action="/guestbook3/delete/${mainVo.no }" method="get">
 		비밀번호 
-		<input type="password" name="pw" value="">
+		<input type="password" name="password" value="">
 		<button type="submit">확인</button>
 		
 		<br> <a href="/guestbook3/list">메인으로 돌아가기</a>

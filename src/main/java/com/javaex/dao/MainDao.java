@@ -134,7 +134,7 @@ public class MainDao {
 	}
 
 	// Guestbook삭제 => delete
-	public int delete(MainVo mainvo) {
+	public int delete(int no, String password) {
 		int count = -1;
 
 		try {
@@ -149,14 +149,14 @@ public class MainDao {
 
 			// 바인딩 쿼리로 만들기
 			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
-			pstmt.setInt(1, mainvo.getNo());
-			pstmt.setString(2, mainvo.getPassword());
+			pstmt.setInt(1, no);
+			pstmt.setString(2,password);
 
 			// 실행
 			count = pstmt.executeUpdate();
 
 			// 결과처리
-			System.out.println(count + "건이 삭제되었습니다.");
+			System.out.println("[" + count + " 건 삭제되었습니다.]");
 
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
@@ -164,6 +164,53 @@ public class MainDao {
 
 		close();
 		return count;
+	}
+	
+	
+	// Guestbook 1명 불러오기
+	public MainVo getMainList(int nno) {
+		MainVo mainVo = null;
+		getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
+			// SQL문 준비
+
+			String query = "";
+			query += " select no ";
+			query += "         ,name ";
+			query += "         ,password ";
+			query += "         ,content ";
+			query += "         ,to_char(reg_date, 'YYYY-MM-DD HH:MI:SS') \"reg_date\" ";
+			query += " from guestbook ";
+			query += " where no = ? ";
+
+			// 바인딩
+			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+			pstmt.setInt(1, nno);
+			System.out.println(query);
+
+			// 실행
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				String name = rs.getString("name");
+				String password = rs.getString("password");
+				String content = rs.getString("content");
+				String reg_date = rs.getString("reg_date");
+
+				// 전체출력
+				mainVo = new MainVo(no, name, password, content, reg_date);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		}
+
+		close();
+		return mainVo;
 	}
 
 }
