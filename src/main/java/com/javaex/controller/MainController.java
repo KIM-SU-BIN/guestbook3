@@ -51,7 +51,7 @@ public class MainController {
 		
 		model.addAttribute("mainVo", mainVo);
 		
-		return "/WEB-INF/views/deleteForm.jsp";
+		return "deleteForm";
 	}
 	
 	
@@ -64,7 +64,7 @@ public class MainController {
 		MainDao mainDao = new MainDao();
 		mainDao.guestInsert(mainVo);
 		
-		return "redirect:/delete";
+		return "redirect:/addList";
 		
 	}
 	
@@ -72,7 +72,7 @@ public class MainController {
 	
 	
 	//List 출력
-	@RequestMapping(value="/list", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/addList", method= {RequestMethod.GET, RequestMethod.POST})
 	public String mainList(Model model) {
 		
 		System.out.println("Guestbook3Controller>mainList()");
@@ -83,7 +83,7 @@ public class MainController {
 				
 		model.addAttribute("mainList", mainList);
 				
-		return"/WEB-INF/views/addList.jsp";	
+		return"addList";	
 	}
 
 }
