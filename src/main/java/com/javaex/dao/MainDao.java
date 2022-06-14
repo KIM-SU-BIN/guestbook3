@@ -8,8 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.javaex.vo.MainVo;
 
+@Repository
 public class MainDao {
 
 	// 0. import java.sql.*;
@@ -99,6 +102,8 @@ public class MainDao {
 		return mainList;
 	}
 
+	
+	
 	// Guestbook추가 => insert
 	public int guestInsert(MainVo mainVo) { // delete, update도 이거 사용 가능 (대신 변수선언 변경)
 		int count = -1;
@@ -134,16 +139,17 @@ public class MainDao {
 	}
 
 	// Guestbook삭제 => delete
-	public int delete(int no, String password) {
+	public int guestDelete(int no, String password) {
 		int count = -1;
 
+		getConnection();
+		
 		try {
-			getConnection();
 
 			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
 			// SQL문 준비
 			String query = "";
-			query += " delete guestbook ";
+			query += " delete from guestbook ";
 			query += " where no = ? ";
 			query += " and password = ? ";
 
@@ -163,6 +169,7 @@ public class MainDao {
 		}
 
 		close();
+		
 		return count;
 	}
 	

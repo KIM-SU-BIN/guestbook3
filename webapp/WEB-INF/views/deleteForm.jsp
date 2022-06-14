@@ -10,12 +10,12 @@
 </head>
 <body>
 
-	<form action="/guestbook3/delete/${mainVo.no }" method="get">
-		비밀번호 
-		<input type="password" name="password" value="">
+	<form action="/guestbook3/delete/${mainVo.no}" method="get">
+		<input type="hidden" name="password" value="${no} }">
+		비밀번호 <input type="password" name="password" value="">
 		<button type="submit">확인</button>
 		
-		<br> <a href="/guestbook3/list">메인으로 돌아가기</a>
+		<br><br> <a href="/guestbook3/addList">메인으로 돌아가기</a>
 	</form>
 
 </body>
