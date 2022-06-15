@@ -46,6 +46,13 @@ public class MainService {
 
 		return count;
 	}
+	
+	
+	
+	public MainVo getMain(int no) {
+		
+		return mainDao.getMainList(no);
+	}
 }
 
 	

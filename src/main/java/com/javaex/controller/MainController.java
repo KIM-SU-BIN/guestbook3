@@ -64,8 +64,8 @@ public class MainController {
 		
 		//데이터 가져오기
 		//MainDao mainDao = new MainDao();
-		
-		model.addAttribute("no", no);
+		MainVo mainVo = mainService.getMain(no);
+		model.addAttribute("no",no);
 		
 		return "deleteForm";
 	}
